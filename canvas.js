@@ -3,7 +3,7 @@
 var TheCanvas = Base.extend({
      $canvas: undefined
     ,context: undefined
-    ,color: '#000000'
+    ,color: '#556270'
     ,thickness: 10
     ,subscribers: {
          set_canvas: function($canvas) {
@@ -11,11 +11,12 @@ var TheCanvas = Base.extend({
             this.context = $canvas[0].getContext('2d');
             this.context.lineWidth = this.thickness;
             this.context.lineCap = 'round';
+            this.subscribers.set_color.bindTo(this)();
         }
-        ,set_color: function(hex) { 
-            this.color = hex;
-            this.context.fillStyle   = hex;
-            this.context.strokeStyle = hex;
+        ,set_color: function(hex) {
+            this.color = hex || this.color;
+            this.context.fillStyle   = this.color;
+            this.context.strokeStyle = this.color;
         }
         ,draw_dot: function(x, y) {
             this.context.beginPath();
@@ -36,7 +37,6 @@ var TheCanvas = Base.extend({
         $.subscribe('Canvas.draw_dot'  , this.subscribers.draw_dot  .bindTo(this)   );
         $.subscribe('Canvas.draw_line' , this.subscribers.draw_line .bindTo(this)    );
     }
-
 });
 
 new TheCanvas();

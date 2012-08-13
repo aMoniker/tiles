@@ -7,33 +7,32 @@
     <script src="jquery-1.8.0.min.js"></script>
     <script src="jq.pubsub.js"></script>
     <script src="canvas.js"></script>
-
-    <style type="text/css">
-        #a_tile {
-            display: block;
-            border: 1px solid #0a0a0a;
-            margin: -125px 0 0 -125px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="stylin.css">
 </head>
 <body>
     <div id="content">
         <canvas id="a_tile" width="250" height="250">Your browser can't render canvas :(</canvas>
+        <div id="the_colors">
+            <div class="color slate selected"></div>
+            <div class="color pacifica"></div>
+            <div class="color apple"></div>
+            <div class="color reflector"></div>
+            <div class="color pillow"></div>
+        </div>
     </div>
 
     <script type="text/javascript">
         $(document).ready(function() {
             var $canvas = $('#a_tile');
             $.publish('Canvas.set_canvas', [$canvas]);
-            $.publish('Canvas.set_color', ['#1a03cd']);
 
             var ink_flow = false;
             var last_position = {};
 
-            $canvas.on('mousedown', function() { ink_flow = true; });
+            $canvas.on('mousedown', function(e) {
+                e.originalEvent.preventDefault(); // prevent I cursor while draggin
+                ink_flow = true;
+            });
             $(document).on('mouseup', function() { ink_flow = false; });
 
             $(document).on('mousemove', function(e) {
@@ -44,6 +43,13 @@
             $canvas.on('mousemove mouseout', function(e) {
                 if (!ink_flow || !last_position) { return; }
                 $.publish('Canvas.draw_line', [last_position.x, last_position.y, e.offsetX, e.offsetY]);
+            });
+
+            $('#the_colors .color').on('click', function() {
+                var $this = $(this);
+                $this.siblings().removeClass('selected');
+                $this.addClass('selected');
+                $.publish('Canvas.set_color', [$this.css('background-color')]);
             });
         });
     </script>

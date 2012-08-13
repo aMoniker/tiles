@@ -1,0 +1,47 @@
+#content {
+    width: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -125px;
+}
+#a_tile {
+    display: block;
+    border: 1px solid #0a0a0a;
+    cursor: pointer;
+}
+#a_tile:active,
+#a_tile:focus {
+    cursor: pointer;
+}
+#the_colors {
+    margin-top: 10px;
+}
+#the_colors .color {
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    float: left;
+    margin-right: 10px;
+    cursor: pointer;
+    box-shadow: -1px -3px 13px -3px white inset;
+}
+#the_colors .color.selected {
+    border: 5px solid #dedede;
+    margin: -5px 5px 0 -5px;
+}
+#the_colors .color.slate {
+    background-color: #556270;
+}
+#the_colors .color.pacifica {
+    background-color: #4ECDC4;
+}
+#the_colors .color.apple {
+    background-color: #C7F464;
+}
+#the_colors .color.reflector {
+    background-color: #FF6B6B;
+}
+#the_colors .color.pillow {
+    background-color: #C44D58;
+}
