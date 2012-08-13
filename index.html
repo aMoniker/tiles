@@ -2,13 +2,18 @@
 
 <html>
 <head>
+    <script src="Base.js"></script>
+    <script src="Bind.js"></script>
     <script src="jquery-1.8.0.min.js"></script>
+    <script src="jq.pubsub.js"></script>
+    <script src="canvas.js"></script>
+
     <style type="text/css">
         #a_tile {
-            position: absolute;
             display: block;
             border: 1px solid #0a0a0a;
             margin: -125px 0 0 -125px;
+            position: absolute;
             top: 50%;
             left: 50%;
         }
@@ -22,39 +27,24 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var $canvas = $('#a_tile');
-            var a_tile = $canvas[0];
-            if(!a_tile.getContext) { return; }
-
-            var context = a_tile.getContext('2d');
-            context.fillStyle = '#1a03cd';
-            context.strokeStyle = '#1a03cd';
-            context.lineWidth = 10;
+            $.publish('Canvas.set_canvas', [$canvas]);
+            $.publish('Canvas.set_color', ['#1a03cd']);
 
             var ink_flow = false;
             var last_position = {};
 
             $canvas.on('mousedown', function() { ink_flow = true; });
-            $canvas.on('mouseup', function() { ink_flow = false; last_position = {}; });
+            $(document).on('mouseup', function() { ink_flow = false; });
 
-            $canvas.on('mousemove', function(e) {
-                if (!ink_flow) { return; }
-
-                if (last_position) {
-                    context.beginPath();
-                    context.moveTo(last_position.x, last_position.y);
-                    context.lineTo(e.offsetX, e.offsetY);
-                    context.stroke();
-                }
-
-                last_position.x = e.offsetX;
-                last_position.y = e.offsetY;
-
-                context.beginPath();
-                context.arc(e.offsetX, e.offsetY, 5, 0, Math.PI * 2, true);
-                context.closePath();
-                context.fill();
+            $(document).on('mousemove', function(e) {
+                last_position.x = e.clientX - $canvas.offset().left;
+                last_position.y = e.clientY - $canvas.offset().top;
             });
 
+            $canvas.on('mousemove mouseout', function(e) {
+                if (!ink_flow || !last_position) { return; }
+                $.publish('Canvas.draw_line', [last_position.x, last_position.y, e.offsetX, e.offsetY]);
+            });
         });
     </script>
 <body>
