@@ -1,33 +1,60 @@
+<!doctype html>
+
 <html>
 <head>
     <script src="jquery-1.8.0.min.js"></script>
+    <style type="text/css">
+        #a_tile {
+            position: absolute;
+            display: block;
+            border: 1px solid #0a0a0a;
+            margin: -125px 0 0 -125px;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
 </head>
 <body>
     <div id="content">
-        <div id="a_tile">Your browser can't render canvas :(</canvas>
+        <canvas id="a_tile" width="250" height="250">Your browser can't render canvas :(</canvas>
     </div>
 
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log('woo');
-
-            var drawingCanvas = document.getElementById('myDrawing');
-
-            var a_tile = $('#a_tile')[0];
-
-            console.log('a_tile.getContext', a_tile.getContext);
+            var $canvas = $('#a_tile');
+            var a_tile = $canvas[0];
             if(!a_tile.getContext) { return; }
 
-            var context = drawingCanvas.getContext('2d');
+            var context = a_tile.getContext('2d');
+            context.fillStyle = '#1a03cd';
+            context.strokeStyle = '#1a03cd';
+            context.lineWidth = 10;
 
-            // Create the yellow face
-            context.strokeStyle = "#000000";
-            context.fillStyle = "#FFFF00";
-            context.beginPath();
-            context.arc(100,100,50,0,Math.PI*2,true);
-            context.closePath();
-            context.stroke();
-            context.fill();
+            var ink_flow = false;
+            var last_position = {};
+
+            $canvas.on('mousedown', function() { ink_flow = true; });
+            $canvas.on('mouseup', function() { ink_flow = false; last_position = {}; });
+
+            $canvas.on('mousemove', function(e) {
+                if (!ink_flow) { return; }
+
+                if (last_position) {
+                    context.beginPath();
+                    context.moveTo(last_position.x, last_position.y);
+                    context.lineTo(e.offsetX, e.offsetY);
+                    context.stroke();
+                }
+
+                last_position.x = e.offsetX;
+                last_position.y = e.offsetY;
+
+                context.beginPath();
+                context.arc(e.offsetX, e.offsetY, 5, 0, Math.PI * 2, true);
+                context.closePath();
+                context.fill();
+            });
+
         });
     </script>
 <body>
