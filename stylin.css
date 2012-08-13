@@ -1,3 +1,6 @@
+body {
+    background: url('images/ios-linen.jpg');
+}
 #content {
     width: 250px;
     position: absolute;
@@ -8,7 +11,9 @@
 #a_tile {
     display: block;
     border: 1px solid #0a0a0a;
+    box-shadow: 0 0 30px -2px black;
     cursor: pointer;
+    background: #fff;
 }
 #a_tile:active,
 #a_tile:focus {
@@ -24,11 +29,11 @@
     float: left;
     margin-right: 10px;
     cursor: pointer;
-    box-shadow: -1px -3px 13px -3px white inset;
+    box-shadow: -1px -3px 13px -3px #888 inset, 0 0 10px 1px #000, 0 -1px 5px 0px #fff;
 }
 #the_colors .color.selected {
-    border: 5px solid #dedede;
-    margin: -5px 5px 0 -5px;
+    border: 3px solid #dedede;
+    margin: -3px 7px 0 -3px;
 }
 #the_colors .color.slate {
     background-color: #556270;

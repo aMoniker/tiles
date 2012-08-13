@@ -32,6 +32,7 @@
             $canvas.on('mousedown', function(e) {
                 e.originalEvent.preventDefault(); // prevent I cursor while draggin
                 ink_flow = true;
+                $.publish('Canvas.draw_dot', [e.offsetX, e.offsetY]);
             });
             $(document).on('mouseup', function() { ink_flow = false; });
 
