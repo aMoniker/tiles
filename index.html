@@ -1,13 +1,12 @@
 <!doctype html>
-
 <html>
 <head>
-    <script src="Base.js"></script>
-    <script src="Bind.js"></script>
-    <script src="jquery-1.8.0.min.js"></script>
-    <script src="jq.pubsub.js"></script>
-    <script src="canvas.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylin.css">
+    <script src="js/Base.js">            </script>
+    <script src="js/Bind.js">            </script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script src="js/jq.pubsub.js">       </script>
+    <script src="js/canvas.js">          </script>
+    <link rel="stylesheet" type="text/css" href="css/stylin.css">
 </head>
 <body>
     <div id="content">
@@ -30,7 +29,7 @@
             var last_position = {};
 
             $canvas.on('mousedown', function(e) {
-                e.originalEvent.preventDefault(); // prevent I cursor while draggin
+                e.originalEvent.preventDefault(); // prevent I cursor while dragging
                 ink_flow = true;
                 $.publish('Canvas.draw_dot', [e.offsetX, e.offsetY]);
             });
