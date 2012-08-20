@@ -1,12 +1,25 @@
 <!doctype html>
 <html>
 <head>
-    <script src="js/Base.js">            </script>
-    <script src="js/Bind.js">            </script>
-    <script src="js/jquery-1.8.0.min.js"></script>
-    <script src="js/jq.pubsub.js">       </script>
-    <script src="js/canvas.js">          </script>
+    <script src="js/Base.js">                       </script>
+    <script src="js/Bind.js">                         </script>
+    <script src="js/jquery-1.8.0.min.js">               </script>
+    <script src="js/jq.pubsub.js">                        </script>
+    <script src="js/canvas.js">                             </script>
+    <script src="js/socket.io.js">                            </script>
+
     <link rel="stylesheet" type="text/css" href="css/stylin.css">
+
+    <script type="text/javascript">
+      console.log('io?', io);
+      var socket = io.connect('http://127.0.0.1:1337');
+      console.log('socket?', socket);
+
+      socket.emit('set nickname', 'hamburger mcgee');
+      socket.on('ready', function (data) {
+        console.log(data);
+      });
+    </script>
 </head>
 <body>
     <div id="content">
