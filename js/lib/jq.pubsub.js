@@ -18,7 +18,16 @@
         // Publish stuff on '/some/topic'. Anything subscribed will be called
         // with a function signature like: function(a,b,c) { ... }
         // $.publish('/some/topic', ['a','b','c']);
+
+        console.warn('topic publish', topic);
+        console.warn('args?', args);
+        console.log('cache', cache);
+        console.log('cache[topic]', cache[topic]);
+
+        if (!cache[topic]) { return; }
         $.each(cache[topic], function(i, callback) {
+            console.warn('callback', callback);
+
             callback.apply($, args || []);
         });
     };

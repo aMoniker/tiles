@@ -4,7 +4,7 @@ var path     = require('path');
 var io       = require('socket.io').listen(1337);
 
 global.jQuery = require('jquery');
-var pubsub = require('../js/jq.pubsub.js');
+var pubsub = require('../js/lib/jq.pubsub.js');
 
 var webroot = path.join(__dirname, '..');
 var port = 8080;

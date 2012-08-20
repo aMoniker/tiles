@@ -1,12 +1,15 @@
 <!doctype html>
 <html>
 <head>
-    <script src="js/Base.js">                       </script>
-    <script src="js/Bind.js">                         </script>
-    <script src="js/jquery-1.8.0.min.js">               </script>
-    <script src="js/jq.pubsub.js">                        </script>
-    <script src="js/canvas.js">                             </script>
-    <script src="js/socket.io.js">                            </script>
+    <script src="js/lib/Base.js">                       </script>
+    <script src="js/lib/Bind.js">                         </script>
+    <script src="js/lib/jquery-1.8.0.min.js">               </script>
+    <script src="js/lib/jq.pubsub.js">                        </script>
+    <script src="js/lib/jq.mousewheel.js">                      </script>
+    <script src="js/lib/socket.io.js">                            </script>
+    <script src="js/game/board.js"                                  </script>
+    <script src="js/game/canvas.js">                                  </script>
+    <script src="js/game/controls.js">                                  </script>
 
     <link rel="stylesheet" type="text/css" href="css/stylin.css">
 
@@ -23,7 +26,11 @@
 </head>
 <body>
     <div id="content">
-        <canvas id="a_tile" width="250" height="250">Your browser can't render canvas :(</canvas>
+        <div id="game_board"></div>
+        <div id="game_assets">
+            <canvas class="a_tile blank_tile" width="250" height="250"></canvas>
+        </div>
+        <!--
         <div id="the_colors">
             <div class="color slate selected"></div>
             <div class="color pacifica"></div>
@@ -31,10 +38,14 @@
             <div class="color reflector"></div>
             <div class="color pillow"></div>
         </div>
+        -->
     </div>
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $.publish('Page.loaded');
+
+            /*
             var $canvas = $('#a_tile');
             $.publish('Canvas.set_canvas', [$canvas]);
 
@@ -64,6 +75,7 @@
                 $this.addClass('selected');
                 $.publish('Canvas.set_color', [$this.css('background-color')]);
             });
+            */
         });
     </script>
 <body>
