@@ -5,27 +5,27 @@ var TheBoard = Base.extend({
     ,rows: 7
     ,cols: 7
     ,tiles: [] // row, column: tiles[4][2]
+    ,lines: {}
     ,constructor: function() {
         $.subscribe('Page.loaded', this.init.bindTo(this));
     }
     ,init: function() {
         this.$ = $('#content');
-        $.subscribe('Game.new_board', this.new_board.bindTo(this));
+        $.subscribe('Game.new_game', this.new_game.bindTo(this));
     }
-    ,new_board: function() {
-        // generate all the tiles
-        for (var r = 1; r < this.rows + 1; r++) {
-            this.tiles[r] = [];
-            for (var c = 1; c < this.cols + 1; c++) {
-                // for now just dom elements, but Tile should be an object
-
-                var $new_tile = this.$.find('#game_assets .blank_tile').clone();
-                this.tiles[r][c] = $new_tile;
-                this.$.find('#game_board').append($new_tile);
-
-                $new_tile.css({
-                     'top': ($new_tile.height() * r * -1) + 'px'
-                    ,'left': ($new_tile.width() * c * -1) + 'px'
+    ,new_game: function() {
+        this.make_tiles();
+    }
+    ,make_tiles: function() {
+        for (r = 0; r < this.rows; r++) {
+            if (!this.tiles[r]) { this.tiles[r] = []; }
+            for (c = 0; c < this.cols; c++) {
+                var new_tile = new Game.Tile();
+                this.tiles[r][c] = new_tile;
+                this.$.find('#game_board').append(new_tile.canvas.$);
+                new_tile.canvas.$.css({
+                     'top': (new_tile.canvas.$.height() * (r + 1)) + 'px'
+                    ,'left': (new_tile.canvas.$.width() * (c + 1)) + 'px'
                 });
             }
         }
